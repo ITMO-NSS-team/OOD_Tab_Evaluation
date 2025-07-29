@@ -5,12 +5,13 @@ from torch.utils.data import DataLoader, TensorDataset
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score, r2_score
+from sklearn.metrics import accuracy_score
+from sklearn.cluster import KMeans
 import warnings
 
 class UniversalIRM:
     def __init__(self, task='classification', n_environments=2, lambda_irm=0.5,
-                 hidden_dim=64, lr=0.001, epochs=100, batch_size=32, 
+                 hidden_dim=64, lr=0.0001, epochs=100, batch_size=32, 
                  patience=5, device=None, verbose=True):
         """
         Universal Invariant Risk Minimization (IRM) for tabular data
@@ -52,7 +53,6 @@ class UniversalIRM:
             return [(X, y)]
         
         # Use k-means clustering on features to create environments
-        from sklearn.cluster import KMeans
         kmeans = KMeans(n_clusters=self.n_environments, random_state=42, n_init=10)
         env_labels = kmeans.fit_predict(X)
         
@@ -80,18 +80,23 @@ class UniversalIRM:
         else:
             output_dim = 1
         
-        model = nn.Sequential(
-            nn.Linear(input_dim, self.hidden_dim),
-            nn.ReLU(),
-            nn.Linear(self.hidden_dim, self.hidden_dim),
-            nn.ReLU(),
-            nn.Linear(self.hidden_dim, output_dim))
+        # Define custom model with separate feature extractor and classifier
+        class IRMModel(nn.Module):
+            def __init__(self, input_dim, hidden_dim, output_dim):
+                super().__init__()
+                self.feature_extractor = nn.Sequential(
+                    nn.Linear(input_dim, hidden_dim),
+                    nn.ReLU(),
+                    nn.Linear(hidden_dim, hidden_dim),
+                    nn.ReLU()
+                )
+                self.classifier = nn.Linear(hidden_dim, output_dim)
+                
+            def forward(self, x):
+                features = self.feature_extractor(x)
+                return self.classifier(features)
         
-        # For binary classification
-        if self.task == 'classification' and output_dim == 1:
-            model.add_module('sigmoid', nn.Sigmoid())
-        
-        return model.to(self.device)
+        return IRMModel(input_dim, self.hidden_dim, output_dim).to(self.device)
     
     def _irm_loss(self, model, x, y):
         """Calculate IRM loss with gradient penalty"""
@@ -100,7 +105,7 @@ class UniversalIRM:
         
         if self.task == 'classification':
             if outputs.shape[1] == 1:  # Binary classification
-                loss = nn.BCELoss()(outputs.squeeze(), y.float())
+                loss = nn.BCEWithLogitsLoss()(outputs.squeeze(), y.float())
             else:  # Multiclass classification
                 loss = nn.CrossEntropyLoss()(outputs, y)
         else:  # Regression
@@ -109,35 +114,19 @@ class UniversalIRM:
         # IRM penalty: Gradient penalty w.r.t. dummy scale parameter
         w = torch.tensor(1.0, requires_grad=True, device=self.device)
         
-        # Create a feature extractor (first part of the network)
-        features = x
-        for i, layer in enumerate(model):
-            if i == len(model) - 1:  # Stop before last layer
-                break
-            features = layer(features)
+        # Get features from feature extractor
+        features = model.feature_extractor(x)
         
         # Apply scaling to features
         scaled_features = w * features
         
-        # Pass through classifier (last layer)
-        if self.task == 'classification' and model[-1].__class__.__name__ == 'Sigmoid':
-            # For binary classification with sigmoid
-            classifier = model[-2]
-            logits_scale = classifier(scaled_features)
-            logits_scale = model[-1](logits_scale)  # Apply sigmoid
-        elif self.task == 'classification':
-            # Multiclass classification
-            classifier = model[-1]
-            logits_scale = classifier(scaled_features)
-        else:
-            # Regression
-            classifier = model[-1]
-            logits_scale = classifier(scaled_features)
+        # Pass through classifier
+        logits_scale = model.classifier(scaled_features)
         
         # Compute loss on scaled features
         if self.task == 'classification':
-            if logits_scale.shape[1] == 1:  # Binary
-                loss_scale = nn.BCELoss()(logits_scale.squeeze(), y.float())
+            if outputs.shape[1] == 1:  # Binary
+                loss_scale = nn.BCEWithLogitsLoss()(logits_scale.squeeze(), y.float())
             else:  # Multiclass
                 loss_scale = nn.CrossEntropyLoss()(logits_scale, y)
         else:  # Regression
@@ -163,7 +152,6 @@ class UniversalIRM:
         y = np.array(y)
         
         # Store for model building
-        self.X_train = X
         self.y_train = y
         
         # Preprocess data
@@ -193,7 +181,10 @@ class UniversalIRM:
         for env_X, env_y in environments:
             # Convert to tensors
             X_tensor = torch.tensor(env_X, dtype=torch.float32)
-            y_tensor = torch.tensor(env_y, dtype=torch.long if self.task == 'classification' else torch.float32)
+            if self.task == 'classification':
+                y_tensor = torch.tensor(env_y, dtype=torch.long)
+            else:
+                y_tensor = torch.tensor(env_y, dtype=torch.float32)
             
             # Create dataset and loader
             dataset = TensorDataset(X_tensor, y_tensor)
@@ -279,7 +270,7 @@ class UniversalIRM:
             
             if self.task == 'classification':
                 if outputs.shape[1] == 1:  # Binary classification
-                    preds = (outputs.squeeze() > 0.5).long()
+                    preds = (torch.sigmoid(outputs.squeeze()) > 0.5).long()
                 else:  # Multiclass classification
                     _, preds = torch.max(outputs, 1)
             else:  # Regression
@@ -308,63 +299,3 @@ class UniversalIRM:
                 return np.vstack([1 - probs.cpu().numpy(), probs.cpu().numpy()]).T
             else:  # Multiclass classification
                 return torch.softmax(outputs, dim=1).cpu().numpy()
-    
-    def score(self, X, y):
-        """Calculate model score (accuracy for classification, R2 for regression)"""
-        preds = self.predict(X)
-        y = np.array(y)
-        
-        if self.task == 'classification':
-            return accuracy_score(y, preds)
-        else:
-            return r2_score(y, preds)
-
-# Example usage
-if __name__ == "__main__":
-    from sklearn.datasets import load_breast_cancer, load_diabetes
-    
-    # ====================
-    # Classification Example
-    # ====================
-    print("\n" + "="*50)
-    print("Classification Example: Breast Cancer Dataset")
-    print("="*50)
-    
-    # Load data
-    data = load_breast_cancer()
-    X, y = data.data, data.target
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    
-    # Train IRM classifier
-    irm_clf = UniversalIRM(task='classification', n_environments=3, 
-                          lambda_irm=0.8, epochs=100, verbose=True)
-    irm_clf.fit(X_train, y_train)
-    
-    # Evaluate
-    train_acc = irm_clf.score(X_train, y_train)
-    test_acc = irm_clf.score(X_test, y_test)
-    print(f"\nIRM Classifier Accuracy:")
-    print(f"Train: {train_acc:.4f}, Test: {test_acc:.4f}")
-    
-    # ====================
-    # Regression Example
-    # ====================
-    print("\n" + "="*50)
-    print("Regression Example: Diabetes Dataset")
-    print("="*50)
-    
-    # Load data
-    data = load_diabetes()
-    X, y = data.data, data.target
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    
-    # Train IRM regressor
-    irm_reg = UniversalIRM(task='regression', n_environments=3, 
-                          lambda_irm=0.5, epochs=200, verbose=True)
-    irm_reg.fit(X_train, y_train)
-    
-    # Evaluate
-    train_r2 = irm_reg.score(X_train, y_train)
-    test_r2 = irm_reg.score(X_test, y_test)
-    print(f"\nIRM Regressor R2 Score:")
-    print(f"Train: {train_r2:.4f}, Test: {test_r2:.4f}")
