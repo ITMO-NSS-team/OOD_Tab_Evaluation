@@ -675,8 +675,8 @@ def main(file_name, target_column_name, aim):
         target_column_name=target_column_name,
         file_prefix_name=f"split_by_{aim}", #output file name
         meta_features=[aim],
-        population_size=3, 
-        generations=3,   
+        population_size=50, 
+        generations=300,   
     )
 if __name__ == "__main__":
     file_name = input("Enter the file name: ")
