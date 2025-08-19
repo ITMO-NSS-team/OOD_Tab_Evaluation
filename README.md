@@ -56,6 +56,7 @@ The optimization uses a genetic algorithm with:
 ### Approach Diagram
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '10px' }}}%%
 graph TD
     A[Input Data<br/>X, y] --> B[Meta-Feature<br/>Extraction]
     B --> C[Evolutionary<br/>Optimization]
@@ -77,20 +78,20 @@ graph TD
     C --> J["Final Split"]
     J --> K["Train Set"] & L["Test Set"]
     
-    style A fill:#FF9E38,stroke:#CC7E2E,stroke-width:3px,color:#fff
-    style B fill:#FF5838,stroke:#CC462E,stroke-width:3px,color:#fff
-    style C fill:#57504A,stroke:#3D3A35,stroke-width:3px,color:#fff
-    style J fill:#43615F,stroke:#2A3F3D,stroke-width:3px,color:#fff
-    style K fill:#38FFF2,stroke:#1ECCC0,stroke-width:3px,color:#2A3F3D
-    style L fill:#38FFF2,stroke:#1ECCC0,stroke-width:3px,color:#2A3F3D
-    style D fill:#5EAAA5,stroke:#3E8A85,stroke-width:3px,color:#fff
-    style E fill:#FFD700,stroke:#CCAC00,stroke-width:3px,color:#57504A
-    style F fill:#AA855E,stroke:#6A6A4E,stroke-width:3px,color:#fff
-    style G fill:#AA6A5E,stroke:#6A4A4E,stroke-width:3px,color:#fff
-    style H fill:#AA6A5E,stroke:#6A4A4E,stroke-width:3px,color:#fff
-    style I fill:#AA6A5E,stroke:#6A4A4E,stroke-width:3px,color:#fff
+    style A fill:#FF9E38,stroke:#CC7E2E,stroke-width:2px,color:#fff
+    style B fill:#FF5838,stroke:#CC462E,stroke-width:2px,color:#fff
+    style C fill:#57504A,stroke:#3D3A35,stroke-width:2px,color:#fff
+    style J fill:#43615F,stroke:#2A3F3D,stroke-width:2px,color:#fff
+    style K fill:#38FFF2,stroke:#1ECCC0,stroke-width:2px,color:#2A3F3D
+    style L fill:#38FFF2,stroke:#1ECCC0,stroke-width:2px,color:#2A3F3D
+    style D fill:#5EAAA5,stroke:#3E8A85,stroke-width:2px,color:#fff
+    style E fill:#FFD700,stroke:#CCAC00,stroke-width:2px,color:#57504A
+    style F fill:#AA855E,stroke:#6A6A4E,stroke-width:2px,color:#fff
+    style G fill:#AA6A5E,stroke:#6A4A4E,stroke-width:2px,color:#fff
+    style H fill:#AA6A5E,stroke:#6A4A4E,stroke-width:2px,color:#fff
+    style I fill:#AA6A5E,stroke:#6A4A4E,stroke-width:2px,color:#fff
     
-    linkStyle default stroke:#57504A,stroke-width:3px
+    linkStyle default stroke:#57504A,stroke-width:2px
 ```
 ## 🚀 Quick Start
 
@@ -158,6 +159,7 @@ The evolutionary splits successfully create larger meta-feature differences comp
 ### Approach Diagram
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '10px' }}}%%
 graph TD
     A[Source Data] --> B[Target Data]
     A --> C[Forest Diffusion<br/>Model Training]
@@ -178,23 +180,20 @@ graph TD
     C --> F
     D --> E
     G --> K["Best Synthetic Data"]
-    K --> L["Synthetic Dataset"] & M["Meta-Feature Analysis"]
     
-    style A fill:#FF9E38,stroke:#CC7E2E,stroke-width:3px
-    style B fill:#FF5838,stroke:#CC462E,stroke-width:3px
-    style C fill:#57504A,stroke:#3D3A35,stroke-width:3px,color:#fff
-    style D fill:#57504A,stroke:#3D3A35,stroke-width:3px,color:#fff
-    style K fill:#43615F,stroke:#2A3F3D,stroke-width:3px,color:#fff
-    style L fill:#38FFF2,stroke:#1ECCC0,stroke-width:3px
-    style M fill:#38FFF2,stroke:#1ECCC0,stroke-width:3px
-    style E fill:#5EAAA5,stroke:#3E8A85,stroke-width:3px
-    style F fill:#FFD700,stroke:#CCAC00,stroke-width:3px
-    style G fill:#AA855E,stroke:#6A6A4E,stroke-width:3px
-    style H fill:#AA6A5E,stroke:#6A4A4E,stroke-width:3px
-    style I fill:#AA6A5E,stroke:#6A4A4E,stroke-width:3px
-    style J fill:#AA6A5E,stroke:#6A4A4E,stroke-width:3px
+    style A fill:#FF9E38,stroke:#CC7E2E,stroke-width:2px
+    style B fill:#FF5838,stroke:#CC462E,stroke-width:2px
+    style C fill:#57504A,stroke:#3D3A35,stroke-width:2px,color:#fff
+    style D fill:#57504A,stroke:#3D3A35,stroke-width:2px,color:#fff
+    style K fill:#43615F,stroke:#2A3F3D,stroke-width:2px,color:#fff
+    style E fill:#5EAAA5,stroke:#3E8A85,stroke-width:2px
+    style F fill:#FFD700,stroke:#CCAC00,stroke-width:2px
+    style G fill:#AA855E,stroke:#6A6A4E,stroke-width:2px
+    style H fill:#AA6A5E,stroke:#6A4A4E,stroke-width:2px
+    style I fill:#AA6A5E,stroke:#6A4A4E,stroke-width:2px
+    style J fill:#AA6A5E,stroke:#6A4A4E,stroke-width:2px
     
-    linkStyle default stroke:#57504A,stroke-width:3px
+    linkStyle default stroke:#57504A,stroke-width:2px
 ```
 ### Basic Usage
 ```python
