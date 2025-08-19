@@ -1,9 +1,5 @@
 # OOD Tabular Evaluation: Meta-Feature Based Distribution Shift Protocol
 
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![arXiv](https://img.shields.io/badge/arXiv-2401.XXXXX-b31b1b.svg)](https://arxiv.org/abs/2401.XXXXX)
-
 ## 🔍 Overview
 
 This repository implements a universal, reproducible Out-of-Distribution (OOD) evaluation protocol for tabular data. It uses evolutionary optimization to create train-test splits that maximize meta-feature differences, enabling controlled investigation of model behavior under distributional shifts.
@@ -28,7 +24,7 @@ Traditional tabular datasets lack mechanisms for constructing well-defined distr
 
 Our approach enhances OOD evaluation through meta-feature based splitting, enabling controlled distributional shifts without architectural changes. Unlike random splits that may not capture meaningful distributional differences, our evolutionary algorithm systematically constructs train-test partitions that maximize meta-feature disparities. The method applies constraints through the fitness function rather than modifying the data generation process, maintaining dataset integrity while enforcing interpretable geometric relationships. Additionally, our framework supports synthetic data generation that preserves specific meta-feature distributions, allowing researchers to create controlled datasets with desired statistical properties for comprehensive robustness testing. This dual capability of both optimized splitting and targeted synthetic generation provides a complete toolkit for systematic OOD evaluation in tabular domains.
 
-### Meta-Feature Based Splitting
+### 1️⃣ Meta-Feature Based Splitting
 
 The core innovation is formulating train-test partitioning as an optimization problem:
 
@@ -44,7 +40,7 @@ Where meta-features include:
 - **Interquartile Range** (`iq_range`): Describes distribution spread
 - **Joint Entropy** (`joint_ent`): Measures overall dataset complexity
 
-### Evolutionary Algorithm
+#### Evolutionary Algorithm
 
 The optimization uses a genetic algorithm with:
 - **Population**: Binary vectors representing train/test assignments
@@ -93,36 +89,6 @@ graph TD
     
     linkStyle default stroke:#57504A,stroke-width:2px
 ```
-## 🚀 Quick Start
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/ITMO-NSS-team/OOD_Tab_Evaluation.git
-cd OOD_Tab_Evaluation
-
-# Install dependencies
-pip install -r requirements.txt
-```
-### Basic Usage
-```python
-from mfs_split.mfs_split import run_split
-import pandas as pd
-
-# Load your data
-data = pd.read_csv('your_data.csv')
-
-# Run split optimization
-run_split(
-    file=data,
-    target_column_name='target',  # Your target column name
-    file_prefix_name='split_by_class_conc',  # Output file prefix
-    meta_features=['class_conc'],  # Meta-feature to optimize
-    population_size=50,
-    generations=300
-)
-```
 
 ## 📊 Experimental Results
 
@@ -155,7 +121,7 @@ The evolutionary splits successfully create larger meta-feature differences comp
 
 - Meta-feature splits produce significantly larger distributional differences than random splits while maintaining balanced test size.
 
-### Synthetic Data Generation
+### 2️⃣ Synthetic Data Generation
 ### Approach Diagram
 
 ```mermaid
@@ -195,20 +161,7 @@ graph TD
     
     linkStyle default stroke:#57504A,stroke-width:2px
 ```
-### Basic Usage
-```python
-from mfs_split.mfs_synthetic import run_shift_convergence_experiment
 
-# Generate synthetic data
-results = run_shift_convergence_experiment(
-    shift_type='your_shift_type',
-    meta_features=['class_conc', 'mut_inf'],  # Meta-features to match
-    mutation_type='all',  # Mutation strategy
-    source_file='data/source.csv',
-    target_file='data/target.csv',
-    generations=100
-)
-```
 ### Synthetic Data Generation Results
 
 Performance on synthetic data generated with optimized meta-features:
@@ -217,6 +170,19 @@ Performance on synthetic data generated with optimized meta-features:
 |---------|----|-----|-----|-----|
 | **electricity** (mut-inf, class-conc, iq-range) | 0.613 ± 0.08 | 0.641 ± 0.09 | 0.587 ± 0.08 | 0.613 ± 0.08 |
 | **electricity** (mut-inf, class-conc) | 0.611 ± 0.01 | 0.625 ± 0.01 | 0.589 ± 0.01 | 0.632 ± 0.02 |
+
+## 🚀 Quick Start
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/ITMO-NSS-team/OOD_Tab_Evaluation.git
+cd OOD_Tab_Evaluation
+
+# Install dependencies
+pip install -r requirements.txt
+```
 
 ## 🔧 Reproducing Experiments
 
@@ -233,44 +199,38 @@ data/
 └── taxi_target.csv
 ```
 
+
 ### 2. Run Meta-Feature Splitting
-
-```bash
-# Basic evolutionary split
-python -c "
-from mfs_split.mfs_split_alg import maximize_distance_evolutionary
+```python
+from mfs_split.mfs_split import run_split
 import pandas as pd
 
-data = pd.read_csv('data/electricity_source.csv')
-X = data.drop('target', axis=1).values
-y = data['target'].values
+# Load your data
+data = pd.read_csv('your_data.csv')
 
-train_ind, test_ind, fitness = maximize_distance_evolutionary(
-    X, y, test_size=0.2, n_generations=100
+# Run split optimization
+run_split(
+    file=data,
+    target_column_name='target',  # Your target column name
+    file_prefix_name='split_by_class_conc',  # Output file prefix
+    meta_features=['class_conc'],  # Meta-feature to optimize
+    population_size=50,
+    generations=300
 )
-print(f'Best fitness: {max(fitness)}')
-"
 ```
+### 3. Run Generating Synthetic Data
+```python
+from mfs_split.mfs_synthetic import run_shift_convergence_experiment
 
-
-
-### Execution Order
-
-```bash
-# 1. Setup environment
-pip install -r requirements.txt
-
-# 2. Run basic evolutionary split
-python -c "
-from mfs_split.mfs_split_alg import maximize_distance_evolutionary
-import pandas as pd
-data = pd.read_csv('data/electricity_source.csv')
-X = data.drop('target', axis=1).values
-y = data['target'].values
-train_ind, test_ind, fitness = maximize_distance_evolutionary(X, y, test_size=0.2, n_generations=100)
-print(f'Best fitness: {max(fitness)}')
-"
-
+# Generate synthetic data
+results = run_shift_convergence_experiment(
+    shift_type='your_shift_type',
+    meta_features=['class_conc', 'mut_inf'],  # Meta-features to match
+    mutation_type='all',  # Mutation strategy
+    source_file='data/source.csv',
+    target_file='data/target.csv',
+    generations=100
+)
 ```
 
 ## 📁 Repository Structure
@@ -314,9 +274,6 @@ OOD_Tab_Evaluation/
 - `pymfe>=0.4.0`
 - `matplotlib>=3.5.0`
 
-## 🤝 Contributing
-
-We welcome contributions! Please feel free to submit issues, feature requests, or pull requests.
 
 ## 📖 Citation
 
@@ -330,16 +287,6 @@ If you use this code in your research, please cite:
   year={2024}
 }
 ```
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🙏 Acknowledgments
-
-- Built on top of [PyMFE](https://github.com/fabiofumarola/pymfe) for meta-feature extraction
-- Uses [DEAP](https://github.com/DEAP/deap) for evolutionary algorithms
-- Inspired by work on distributional robustness and meta-learning
 
 ## 📞 Contact
 
