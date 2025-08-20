@@ -34,11 +34,18 @@ subject to: |test_set| = α × |dataset|
 ```
 
 Where meta-features include, for example:
+
+ ℹ️ **Info-theory:**
+ 
 - **Attribute Entropy** (`attr_ent`): Measures feature distribution complexity
 - **Class Concentration** (`class_conc`): Quantifies class imbalance
 - **Mutual Information** (`mut_inf`): Captures feature-target relationships
 - **Interquartile Range** (`iq_range`): Describes distribution spread
+  
+ 🔢 **Statistical:**
 - **Joint Entropy** (`joint_ent`): Measures overall dataset complexity
+- **Kurtosis** (`kurtosis`): Measures distribution tail heaviness
+- **Eigenvalues** (`eigenvalues`): Captures data structure variance
 
 ### Evolutionary Algorithm
 
