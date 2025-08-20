@@ -98,7 +98,7 @@ graph TD
 
 
 
-### 📊 Experimental Results: Comprehensive Train/Test Split Analysis
+### 📊 Experimental Results: Train/Test Split Analysis
 
 📌 **Bold** indicates best result in category
 | Split type | Dataset | LR | XGB | IRM | DRO |
