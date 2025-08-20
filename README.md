@@ -50,11 +50,11 @@ Where meta-features include, for example:
 ### Evolutionary Algorithm
 
 The optimization uses a genetic algorithm with:
-- **Population**: Binary vectors representing train/test assignments
-- **Fitness**: Euclidean distance between meta-feature vectors
-- **Selection**: Tournament selection with elitism
-- **Crossover**: Uniform crossover with repair mechanisms
-- **Mutation**: Swap operations maintaining test set size
+- **Population**: Lists of indices representing test set assignments
+- **Fitness**: Ratio-based distance between meta-feature values (train/test ratios)
+- **Selection**: NSGA-II multi-objective selection
+- **Crossover**: Index exchange between individuals while maintaining test set size
+- **Mutation**: Index replacement with available indices from train set
 
 ### Approach Diagram
 
