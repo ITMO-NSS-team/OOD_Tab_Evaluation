@@ -26,21 +26,21 @@ Our approach enhances OOD evaluation through meta-feature based splitting, enabl
 
 ### 1️⃣ Meta-Feature Based Splitting
 
-The core innovation is formulating train-test partitioning as an optimization problem:
+The core idea is formulating train-test partitioning as an optimization problem:
 
 ```
-maximize: Σ(meta_features(train) / meta_features(test))
-subject to: |test| = α|dataset|
+maximize: [mean(meta_feature₁(train))/mean(meta_feature₁(test)), ..., mean(meta_featureₙ(train))/mean(meta_featureₙ(test))]
+subject to: |test_set| = α × |dataset|
 ```
 
-Where meta-features include:
+Where meta-features include, for example:
 - **Attribute Entropy** (`attr_ent`): Measures feature distribution complexity
 - **Class Concentration** (`class_conc`): Quantifies class imbalance
 - **Mutual Information** (`mut_inf`): Captures feature-target relationships
 - **Interquartile Range** (`iq_range`): Describes distribution spread
 - **Joint Entropy** (`joint_ent`): Measures overall dataset complexity
 
-#### Evolutionary Algorithm
+### Evolutionary Algorithm
 
 The optimization uses a genetic algorithm with:
 - **Population**: Binary vectors representing train/test assignments
@@ -57,11 +57,11 @@ graph TD
     A[Input Data<br/>X, y] --> B[Meta-Feature<br/>Extraction]
     B --> C[Evolutionary<br/>Optimization]
     
-    subgraph Meta-Features
+    subgraph Meta-Features["<div style='text-align: center; margin-top: 105px;'>Meta-Features</div>"]
         D["• class_conc<br/>• mut_inf<br/>• iq_range"]
     end
     
-    subgraph Optimization
+    subgraph Optimization["<div style='text-align: right; margin-top: 5px; margin-right: 10px;'>Optimization</div>"]
         E["Population"] --> F["Fitness Function<br/>ratio = MF_train / MF_test"]
         F --> G["Selection"]
         G --> H["Crossover"]
@@ -95,33 +95,21 @@ graph TD
 ### Comprehensive Train/Test Split Analysis
 
 📌 **Bold** indicates best result in category
-| Metric | Dataset | LR | XGB | IRM | DRO |
+| Split type | Dataset | LR | XGB | IRM | DRO |
 |--------|---------|----|-----|-----|-----|
-| **Random Split** |
-| | electricity | 0.798 ± 0.00 | 0.832 ± 0.00 | 0.813 ± 0.01 | 0.814 ± 0.02 |
-| | taxi | 0.752 ± 0.01 | 0.778 ± 0.01 | 0.790 ± 0.02 | 0.712 ± 0.02 |
-| **Mut_inf** |
-| | electricity | **0.735** ± 0.02 | **0.749** ± 0.01 | **0.795** ± 0.02 | **0.766** ± 0.01 |
-| | taxi | 0.723 ± 0.01 | 0.754 ± 0.01 | 0.899 ± 0.01 | 0.696 ± 0.01 |
-| **Class_conc** |
-| | electricity | 0.736 ± 0.01 | 0.772 ± 0.01 | 0.842 ± 0.03 | 0.783 ± 0.01 |
-| | taxi | **0.526** ± 0.10 | **0.592** ± 0.07 | **0.773** ± 0.10 | **0.505** ± 0.10 |
+| **Random Split**| taxi | 0.752 ± 0.01 | 0.778 ± 0.01 | 0.790 ± 0.02 | 0.712 ± 0.02 |
+| **Class_conc** | taxi | **0.526** ± 0.10 | **0.592** ± 0.07 | **0.773** ± 0.10 | **0.505** ± 0.10 |
+| **Random Split** | electricity | 0.798 ± 0.00 | 0.832 ± 0.00 | 0.813 ± 0.01 | 0.814 ± 0.02 |
+| **Mut_inf** | electricity | **0.735** ± 0.02 | **0.749** ± 0.01 | **0.795** ± 0.02 | **0.766** ± 0.01 |
 
-
-### Meta-Feature Analysis
-
-The evolutionary splits successfully create larger meta-feature differences compared to random splits:
-
-| Dataset | Split Type | attr_ent | class_conc | mut_inf | iq_range | joint_ent |
-|---------|------------|----------|------------|---------|----------|-----------|
-| electricity | **MF_split** | **1.600** ± 0.00 | **0.021** ± 0.01 | **2.743** ± 0.61 | **1.754** ± 0.07 | **1.400** ± 0.00 |
-| electricity | random_split | 1.090 ± 0.03 | 0.730 ± 0.01 | 0.990 ± 0.00 | 1.000 ± 0.01 | 1.070 ± 0.02 |
-| taxi | **MF_split** | **1.291** ± 0.01 | **0.021** ± 0.02 | **1.160** ± 0.06 | **1.612** ± 0.03 | **1.213** ± 0.01 |
-| taxi | random_split | 1.090 ± 0.00 | 0.710 ± 0.00 | 0.980 ± 0.00 | 1.000 ± 0.01 | 1.070 ± 0.00 |
-
-- Meta-feature splits produce significantly larger distributional differences than random splits while maintaining balanced test size.
 
 ### 2️⃣ Synthetic Data Generation
+
+The synthetic generation approach formulates data creation as an optimization problem:
+```
+minimize: ||meta_features(synthetic) - meta_features(target)||₂
+subject to: synthetic ∈ feasible_space(source)
+```
 ### Approach Diagram
 
 ```mermaid
@@ -131,11 +119,11 @@ graph TD
     A --> C[Forest Diffusion<br/>Model Training]
     B --> D[Target Meta-Features<br/>Extraction]
     
-    subgraph Meta-Features
+    subgraph Meta-Features["<div style='text-align: center; margin-top: 105px;'>Meta-Features</div>"]
         E["• class_conc<br/>• mut_inf<br/>• iq_range"]
     end
     
-    subgraph Evolutionary Process
+    subgraph Evolutionary Process["<div style='text-align: left; margin-top: 5px; margin-left: 30px;'>Optimization</div>"]
         F["Population<br/>Synthetic Data"] --> G["Fitness Function<br/>||MF_synthetic - MF_target||"]
         G --> H["Selection"]
         H --> I["Crossover"]
@@ -147,17 +135,17 @@ graph TD
     D --> E
     G --> K["Best Synthetic Data"]
     
-    style A fill:#FF9E38,stroke:#CC7E2E,stroke-width:2px
-    style B fill:#FF5838,stroke:#CC462E,stroke-width:2px
+    style A fill:#FF9E38,stroke:#CC7E2E,stroke-width:2px,color:#fff
+    style B fill:#FF5838,stroke:#CC462E,stroke-width:2px,color:#fff
     style C fill:#57504A,stroke:#3D3A35,stroke-width:2px,color:#fff
     style D fill:#57504A,stroke:#3D3A35,stroke-width:2px,color:#fff
     style K fill:#43615F,stroke:#2A3F3D,stroke-width:2px,color:#fff
-    style E fill:#5EAAA5,stroke:#3E8A85,stroke-width:2px
+    style E fill:#5EAAA5,stroke:#3E8A85,stroke-width:2px,color:#fff
     style F fill:#FFD700,stroke:#CCAC00,stroke-width:2px
-    style G fill:#AA855E,stroke:#6A6A4E,stroke-width:2px
-    style H fill:#AA6A5E,stroke:#6A4A4E,stroke-width:2px
-    style I fill:#AA6A5E,stroke:#6A4A4E,stroke-width:2px
-    style J fill:#AA6A5E,stroke:#6A4A4E,stroke-width:2px
+    style G fill:#AA855E,stroke:#6A6A4E,stroke-width:2px,color:#fff
+    style H fill:#AA6A5E,stroke:#6A4A4E,stroke-width:2px,color:#fff
+    style I fill:#AA6A5E,stroke:#6A4A4E,stroke-width:2px,color:#fff
+    style J fill:#AA6A5E,stroke:#6A4A4E,stroke-width:2px,color:#fff
     
     linkStyle default stroke:#57504A,stroke-width:2px
 ```
@@ -218,18 +206,18 @@ run_split(
     generations=300
 )
 ```
-### 3. Run Generating Synthetic Data
+### 3. Run Synthetic Data Generation
 ```python
 from mfs_split.mfs_synthetic import run_shift_convergence_experiment
 
 # Generate synthetic data
 results = run_shift_convergence_experiment(
-    shift_type='your_shift_type',
     meta_features=['class_conc', 'mut_inf'],  # Meta-features to match
     mutation_type='all',  # Mutation strategy
+    n_samples=dataset_length, # Number of samples to generate
+    generations=200,
     source_file='data/source.csv',
-    target_file='data/target.csv',
-    generations=100
+    target_file='data/target.csv'
 )
 ```
 
@@ -282,9 +270,6 @@ If you use this code in your research, please cite:
 ```bibtex
 @article{ood_tabular_evaluation,
   title={Meta-Feature Based Distribution Shift Protocol for Tabular Data},
-  author={Your Name},
-  journal={arXiv preprint},
-  year={2024}
 }
 ```
 
