@@ -24,7 +24,7 @@ Traditional tabular datasets lack mechanisms for constructing well-defined distr
 
 Our approach enhances OOD evaluation through meta-feature based splitting, enabling controlled distributional shifts without architectural changes. Unlike random splits that may not capture meaningful distributional differences, our evolutionary algorithm systematically constructs train-test partitions that maximize meta-feature disparities. The method applies constraints through the fitness function rather than modifying the data generation process, maintaining dataset integrity while enforcing interpretable geometric relationships. Additionally, our framework supports synthetic data generation that preserves specific meta-feature distributions, allowing researchers to create controlled datasets with desired statistical properties for comprehensive robustness testing. This dual capability of both optimized splitting and targeted synthetic generation provides a complete toolkit for systematic OOD evaluation in tabular domains.
 
-### 1️⃣ Meta-Feature Based Splitting
+## 1️⃣ Meta-Feature Based Splitting
 
 The core idea is formulating train-test partitioning as an optimization problem:
 
@@ -90,9 +90,8 @@ graph TD
 ```
 
 
-## 📊 Experimental Results
 
-### Comprehensive Train/Test Split Analysis
+### 📊 Experimental Results: Comprehensive Train/Test Split Analysis
 
 📌 **Bold** indicates best result in category
 | Split type | Dataset | LR | XGB | IRM | DRO |
@@ -103,7 +102,7 @@ graph TD
 | **Mut_inf** | electricity | **0.735** ± 0.02 | **0.749** ± 0.01 | **0.795** ± 0.02 | **0.766** ± 0.01 |
 
 
-### 2️⃣ Synthetic Data Generation
+## 2️⃣ Synthetic Data Generation
 
 The synthetic generation approach formulates data creation as an optimization problem:
 ```
@@ -149,7 +148,7 @@ graph TD
     linkStyle default stroke:#57504A,stroke-width:2px
 ```
 
-### Synthetic Data Generation Results
+### 📊 Experimental Results: Synthetic Data Generation Analysis
 
 Performance on synthetic data generated with optimized meta-features:
 
