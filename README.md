@@ -57,7 +57,7 @@ graph TD
     A[Input Data<br/>X, y] --> C[Evolutionary<br/>Optimization]
     
     subgraph Meta-Features["<div style='text-align: center; margin-top: 10px;'>Meta-Features</div>"]
-        D["• class_conc<br/>• mut_inf<br/>• iq_range"]
+        D["Statistical,<br/>Info-theory"]
     end
     
     subgraph Optimization["<div style='text-align: right; margin-top: 5px; margin-right: 10px;'>Optimization</div>"]
@@ -117,8 +117,8 @@ graph TD
     A[Source Data] --> C[Forest Diffusion<br/>Model Training]
     B[Target Data] --> D[Target Meta-Features<br/>Extraction]
     
-    subgraph Meta-Features["<div style='text-align: center; margin-top: 105px;'>Meta-Features</div>"]
-        E["• class_conc<br/>• mut_inf<br/>• iq_range"]
+    subgraph Meta-Features["<div style='text-align: center; margin-top: 90px;'>Meta-Features</div>"]
+        E["Statistical,<br/>Info-theory"]
     end
     
     subgraph Evolutionary Process["<div style='text-align: left; margin-top: 5px; margin-left: 30px;'>Optimization</div>"]
