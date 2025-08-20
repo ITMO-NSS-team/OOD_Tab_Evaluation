@@ -54,41 +54,41 @@ The optimization uses a genetic algorithm with:
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '10px' }}}%%
 graph TD
-    A[Input Data<br/>X, y] --> B[Meta-Feature<br/>Extraction]
-    B --> C[Evolutionary<br/>Optimization]
+    A[Input Data<br/>X, y] --> C[Evolutionary<br/>Optimization]
     
-    subgraph Meta-Features["<div style='text-align: center; margin-top: 105px;'>Meta-Features</div>"]
+    subgraph Meta-Features["<div style='text-align: center; margin-top: 10px;'>Meta-Features</div>"]
         D["• class_conc<br/>• mut_inf<br/>• iq_range"]
     end
     
     subgraph Optimization["<div style='text-align: right; margin-top: 5px; margin-right: 10px;'>Optimization</div>"]
-        E["Population"] --> F["Fitness Function<br/>ratio = MF_train / MF_test"]
-        F --> G["Selection"]
-        G --> H["Crossover"]
-        H --> I["Mutation"]
-        I --> E
+        E["Population<br/>Train/Test Splits"] --> F["Meta-Feature<br/>Extraction"]
+        F --> G["Fitness Function<br/>ratio = MF_train / MF_test"]
+        G --> H["Selection"]
+        H --> I["Crossover"]
+        I --> J["Mutation"]
+        J --> E
     end
     
-    B --> D
     C --> E
-    C --> J["Final Split"]
-    J --> K["Train Set"] & L["Test Set"]
+    C --> K["Final Split"]
+    K --> L["Train Set"] & M["Test Set"]
     
     style A fill:#FF9E38,stroke:#CC7E2E,stroke-width:2px,color:#fff
-    style B fill:#FF5838,stroke:#CC462E,stroke-width:2px,color:#fff
     style C fill:#57504A,stroke:#3D3A35,stroke-width:2px,color:#fff
-    style J fill:#43615F,stroke:#2A3F3D,stroke-width:2px,color:#fff
-    style K fill:#38FFF2,stroke:#1ECCC0,stroke-width:2px,color:#2A3F3D
+    style K fill:#43615F,stroke:#2A3F3D,stroke-width:2px,color:#fff
     style L fill:#38FFF2,stroke:#1ECCC0,stroke-width:2px,color:#2A3F3D
+    style M fill:#38FFF2,stroke:#1ECCC0,stroke-width:2px,color:#2A3F3D
     style D fill:#5EAAA5,stroke:#3E8A85,stroke-width:2px,color:#fff
     style E fill:#FFD700,stroke:#CCAC00,stroke-width:2px,color:#57504A
     style F fill:#AA855E,stroke:#6A6A4E,stroke-width:2px,color:#fff
     style G fill:#AA6A5E,stroke:#6A4A4E,stroke-width:2px,color:#fff
     style H fill:#AA6A5E,stroke:#6A4A4E,stroke-width:2px,color:#fff
     style I fill:#AA6A5E,stroke:#6A4A4E,stroke-width:2px,color:#fff
+    style J fill:#AA6A5E,stroke:#6A4A4E,stroke-width:2px,color:#fff
     
     linkStyle default stroke:#57504A,stroke-width:2px
 ```
+
 
 ## 📊 Experimental Results
 
@@ -115,9 +115,8 @@ subject to: synthetic ∈ feasible_space(source)
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '10px' }}}%%
 graph TD
-    A[Source Data] --> B[Target Data]
-    A --> C[Forest Diffusion<br/>Model Training]
-    B --> D[Target Meta-Features<br/>Extraction]
+    A[Source Data] --> C[Forest Diffusion<br/>Model Training]
+    B[Target Data] --> D[Target Meta-Features<br/>Extraction]
     
     subgraph Meta-Features["<div style='text-align: center; margin-top: 105px;'>Meta-Features</div>"]
         E["• class_conc<br/>• mut_inf<br/>• iq_range"]
