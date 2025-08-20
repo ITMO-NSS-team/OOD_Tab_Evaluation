@@ -86,12 +86,12 @@ graph TD
     style L fill:#287786,stroke:#287786,stroke-width:1px,color:#fff
     style M fill:#287786,stroke:#287786,stroke-width:1px,color:#fff
     style D fill:#66B8C8,stroke:#66B8C8,stroke-width:1px,color:#fff
-    style E fill:#9FB88E,stroke:#9FB88E,stroke-width:1px,color:#fff
-    style F fill:#DBA494,stroke:#DBA494,stroke-width:1px,color:#fff
-    style G fill:#9FB88E,stroke:#9FB88E,stroke-width:1px,color:#fff
-    style H fill:#DBA494,stroke:#DBA494,stroke-width:1px,color:#fff
-    style I fill:#DBA494,stroke:#DBA494,stroke-width:1px,color:#fff
-    style J fill:#DBA494,stroke:#DBA494,stroke-width:1px,color:#fff
+    style E fill:#DBA494,stroke:#DBA494,stroke-width:1px,color:#fff
+    style F fill:#9FB88E,stroke:#9FB88E,stroke-width:1px,color:#fff
+    style G fill:#DBA494,stroke:#DBA494,stroke-width:1px,color:#fff
+    style H fill:#9FB88E,stroke:#9FB88E,stroke-width:1px,color:#fff
+    style I fill:#9FB88E,stroke:#9FB88E,stroke-width:1px,color:#fff
+    style J fill:#9FB88E,stroke:#9FB88E,stroke-width:1px,color:#fff
     
     linkStyle default stroke:#287786,stroke-width:1.5px
 ```
@@ -146,11 +146,11 @@ graph TD
     style D fill:#8A8F35,stroke:#8A8F35,stroke-width:1px,color:#fff
     style K fill:#287786,stroke:#287786,stroke-width:1px,color:#fff
     style E fill:#66B8C8,stroke:#66B8C8,stroke-width:1px,color:#fff
-    style F fill:#9FB88E,stroke:#9FB88E,stroke-width:1px,color:#fff
-    style G fill:#9FB88E,stroke:#9FB88E,stroke-width:1px,color:#fff
-    style H fill:#DBA494,stroke:#DBA494,stroke-width:1px,color:#fff
-    style I fill:#DBA494,stroke:#DBA494,stroke-width:1px,color:#fff
-    style J fill:#DBA494,stroke:#DBA494,stroke-width:1px,color:#fff
+    style F fill:#DBA494,stroke:#DBA494,stroke-width:1px,color:#fff
+    style G fill:#DBA494,stroke:#DBA494,stroke-width:1px,color:#fff
+    style H fill:#9FB88E,stroke:#9FB88E,stroke-width:1px,color:#fff
+    style I fill:#9FB88E,stroke:#9FB88E,stroke-width:1px,color:#fff
+    style J fill:#9FB88E,stroke:#9FB88E,stroke-width:1px,color:#fff
     
     linkStyle default stroke:#287786,stroke-width:1.5px
 ```
