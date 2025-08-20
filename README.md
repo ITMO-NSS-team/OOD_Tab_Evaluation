@@ -80,20 +80,20 @@ graph TD
     C --> K["Final Split"]
     K --> L["Train Set"] & M["Test Set"]
     
-    style A fill:#761A29,stroke:#761A29,stroke-width:2px,color:#fff
-    style C fill:#8A8F35,stroke:#8A8F35,stroke-width:2px,color:#fff
-    style K fill:#287786,stroke:#287786,stroke-width:2px,color:#fff
-    style L fill:#287786,stroke:#287786,stroke-width:2px,color:#fff
-    style M fill:#287786,stroke:#287786,stroke-width:2px,color:#fff
-    style D fill:#66B8C8,stroke:#287786,stroke-width:2px,color:#fff
-    style E fill:#9FB88E,stroke:#287786,stroke-width:2px,color:#fff
-    style F fill:#DBA494,stroke:#287786,stroke-width:2px,color:#fff
-    style G fill:#9FB88E,stroke:#287786,stroke-width:2px,color:#fff
-    style H fill:#DBA494,stroke:#287786,stroke-width:2px,color:#fff
-    style I fill:#DBA494,stroke:#287786,stroke-width:2px,color:#fff
-    style J fill:#DBA494,stroke:#287786,stroke-width:2px,color:#fff
+    style A fill:#761A29,stroke:#761A29,stroke-width:1px,color:#fff
+    style C fill:#8A8F35,stroke:#8A8F35,stroke-width:1px,color:#fff
+    style K fill:#287786,stroke:#287786,stroke-width:1px,color:#fff
+    style L fill:#287786,stroke:#287786,stroke-width:1px,color:#fff
+    style M fill:#287786,stroke:#287786,stroke-width:1px,color:#fff
+    style D fill:#66B8C8,stroke:#66B8C8,stroke-width:1px,color:#fff
+    style E fill:#9FB88E,stroke:#9FB88E,stroke-width:1px,color:#fff
+    style F fill:#DBA494,stroke:#DBA494,stroke-width:1px,color:#fff
+    style G fill:#9FB88E,stroke:#9FB88E,stroke-width:1px,color:#fff
+    style H fill:#DBA494,stroke:#DBA494,stroke-width:1px,color:#fff
+    style I fill:#DBA494,stroke:#DBA494,stroke-width:1px,color:#fff
+    style J fill:#DBA494,stroke:#DBA494,stroke-width:1px,color:#fff
     
-    linkStyle default stroke:#287786,stroke-width:2px
+    linkStyle default stroke:#287786,stroke-width:1.5px
 ```
 
 
@@ -140,19 +140,19 @@ graph TD
     D --> E
     G --> K["Best Synthetic Data"]
     
-    style A fill:#761A29,stroke:#761A29,stroke-width:2px,color:#fff
-    style B fill:#761A29,stroke:#761A29,stroke-width:2px,color:#fff
-    style C fill:#8A8F35,stroke:#8A8F35,stroke-width:2px,color:#fff
-    style D fill:#8A8F35,stroke:#8A8F35,stroke-width:2px,color:#fff
-    style K fill:#287786,stroke:#287786,stroke-width:2px,color:#fff
-    style E fill:#66B8C8,stroke:#287786,stroke-width:2px,color:#fff
-    style F fill:#9FB88E,stroke:#287786,stroke-width:2px,color:#fff
-    style G fill:#9FB88E,stroke:#287786,stroke-width:2px,color:#fff
-    style H fill:#DBA494,stroke:#287786,stroke-width:2px,color:#fff
-    style I fill:#DBA494,stroke:#287786,stroke-width:2px,color:#fff
-    style J fill:#DBA494,stroke:#287786,stroke-width:2px,color:#fff
+    style A fill:#761A29,stroke:#761A29,stroke-width:1px,color:#fff
+    style B fill:#761A29,stroke:#761A29,stroke-width:1px,color:#fff
+    style C fill:#8A8F35,stroke:#8A8F35,stroke-width:1px,color:#fff
+    style D fill:#8A8F35,stroke:#8A8F35,stroke-width:1px,color:#fff
+    style K fill:#287786,stroke:#287786,stroke-width:1px,color:#fff
+    style E fill:#66B8C8,stroke:#66B8C8,stroke-width:1px,color:#fff
+    style F fill:#9FB88E,stroke:#9FB88E,stroke-width:1px,color:#fff
+    style G fill:#9FB88E,stroke:#9FB88E,stroke-width:1px,color:#fff
+    style H fill:#DBA494,stroke:#DBA494,stroke-width:1px,color:#fff
+    style I fill:#DBA494,stroke:#DBA494,stroke-width:1px,color:#fff
+    style J fill:#DBA494,stroke:#DBA494,stroke-width:1px,color:#fff
     
-    linkStyle default stroke:#287786,stroke-width:2px
+    linkStyle default stroke:#287786,stroke-width:1.5px
 ```
 
 ### 📊 Experimental Results: Synthetic Data Generation Analysis
