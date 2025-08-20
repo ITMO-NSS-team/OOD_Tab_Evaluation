@@ -63,11 +63,11 @@ The optimization uses a genetic algorithm with:
 graph TD
     A[Input Data<br/>X, y] --> C[Evolutionary<br/>Optimization]
     
-    subgraph Meta-Features["<div style='text-align: center; margin-top: 10px;'>Meta-Features</div>"]
+    subgraph Meta-Features["<div style='text-align: center; margin-top: 10px; color:#287786;'>Meta-Features</div>"]
         D["Statistical,<br/>Info-theory"]
     end
     
-    subgraph Optimization["<div style='text-align: right; margin-top: 5px; margin-right: 10px;'>Optimization</div>"]
+    subgraph Optimization["<div style='text-align: right; margin-top: 5px; margin-right: 10px; color:#287786; '>Optimization</div>"]
         E["Population<br/>Train/Test Splits"] --> F["Meta-Feature<br/>Extraction"]
         F --> G["Fitness Function<br/>ratio = MF_train / MF_test"]
         G --> H["Selection"]
@@ -124,11 +124,11 @@ graph TD
     A[Source Data] --> C[Forest Diffusion<br/>Model Training]
     B[Target Data] --> D[Target Meta-Features<br/>Extraction]
     
-    subgraph Meta-Features["<div style='text-align: center; margin-top: 90px;'>Meta-Features</div>"]
+    subgraph Meta-Features["<div style='text-align: center; margin-top: 90px; color:#287786;'>Meta-Features</div>"]
         E["Statistical,<br/>Info-theory"]
     end
     
-    subgraph Evolutionary Process["<div style='text-align: left; margin-top: 5px; margin-left: 30px;'>Optimization</div>"]
+    subgraph Evolutionary Process["<div style='text-align: left; margin-top: 5px; margin-left: 30px; color:#287786;'>Optimization</div>"]
         F["Population<br/>Synthetic Data"] --> G["Fitness Function<br/>||MF_synthetic - MF_target||"]
         G --> H["Selection"]
         H --> I["Crossover"]
