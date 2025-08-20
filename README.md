@@ -283,3 +283,7 @@ If you use this code in your research, please cite:
 ## 📞 Contact
 
 For questions or feedback, please open an issue on GitHub or contact the maintainers.
+
+---
+
+**Last updated**: December 2024
