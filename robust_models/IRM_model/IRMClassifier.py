@@ -109,7 +109,27 @@ class IRMClassifier(nn.Module):
                 ))
             
             self._update(minibatches)
+        return self
 
+    def predict_proba(self, X: np.ndarray, device: str = 'cuda' if torch.cuda.is_available() else 'cpu') -> np.ndarray:
+        """Predict class probabilities.
+        
+        Args:
+            X: Input features (n_samples, n_features)
+            device: Device for computation
+            
+        Returns:
+            Probability array of shape (n_samples, 2)
+        """
+        self.eval()
+        with torch.no_grad():
+            X_tensor = torch.tensor(X).float().to(device)
+            logits = self(X_tensor)
+            proba_1 = torch.sigmoid(logits).cpu().numpy()
+        return np.vstack([1-proba_1, proba_1])
+    
+    
+    
     def predict(self, X: Union[np.ndarray, torch.Tensor]) -> np.ndarray:
         self.eval()
         if isinstance(X, np.ndarray):

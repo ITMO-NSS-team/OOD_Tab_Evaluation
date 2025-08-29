@@ -96,7 +96,7 @@ class AdversarialLabelDRO(nn.Module):
         
         self.to(device)
         dataset = TensorDataset(torch.tensor(X).float(), torch.tensor(y).long())
-        loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
+        loader = DataLoader(dataset, batch_size=batch_size, shuffle=True, drop_last=True)
         
         criterion = nn.BCEWithLogitsLoss(reduction='none')
         
@@ -161,6 +161,7 @@ class AdversarialLabelDRO(nn.Module):
                     
                 # Update dual parameter
                 self.pi_t = nn.Parameter(pi_t_new, requires_grad=True)
+        return self
     
     def predict_proba(self, X: np.ndarray, device: str = "cpu") -> np.ndarray:
         """Predict class probabilities.
