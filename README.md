@@ -47,7 +47,6 @@ OOD_Tab_Evaluation/
     │   └── iris_demo.ipynb                  # End-to-end demo (split + synth) on Iris
     └── CTGAN_shifter/                       # Branch 3 (latent steering)
         ├── README.md
-        ├── simple_experiment.ipynb
         ├── shifter/
         │   ├── src/{shifter,differentiable_mfe,ctgan_adapter}.py
         │   └── example/                     # Pretrained checkpoint + demo notebook
