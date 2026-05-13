@@ -10,8 +10,6 @@ The protocol is realized as **three complementary branches** sharing the same id
 | 2 | **Synthetic OOD generation** | source-informed synthetic tabular datasets | NSGA-III + ForestDiffusion prior | [`mfs_based_algs/evo_based_algs/mfs_synthetic.py`](mfs_based_algs/evo_based_algs/mfs_synthetic.py) |
 | 3 | **CTGAN latent steering (Shifter)** | latent noise distribution of a frozen CTGAN | gradient-based via differentiable meta-features | [`mfs_based_algs/CTGAN_shifter/`](mfs_based_algs/CTGAN_shifter/) |
 
-Use **branch 1** when re-splitting the source dataset is enough; **branch 2** when the source geometry cannot reproduce the target meta-feature profile; **branch 3** when a sufficiently good CTGAN is available and the target is described by differentiable meta-features.
-
 ![Protocol architecture: split-based, synthesis-based, and CTGAN-Shifter branches](assets/architecture.png)
 
 *All three branches consume the same source data and the same target meta-feature profile, but operate over different search spaces — index subsets (NSGA-II), synthetic datasets initialized by Forest Diffusion (NSGA-III), and the latent noise distribution of a frozen CTGAN (gradient-based Shifter).*
