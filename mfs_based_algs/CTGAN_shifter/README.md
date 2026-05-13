@@ -47,7 +47,6 @@ $$\mathcal{L} = \underbrace{\text{MSE}(\hat{m},\ m^*)}_{\text{meta loss}} + \lam
 CTGAN_shifter/
 ├── README.md                                     # This file
 ├── assets/architecture.png                       # Diagram embedded in this README
-├── simple_experiment.ipynb                       # End-to-end demonstration
 ├── shifter/
 │   ├── src/
 │   │   ├── shifter.py                            # Shifter network (Δ_θ + MetaEncoder)
@@ -76,16 +75,9 @@ jupyter notebook mfs_based_algs/CTGAN_shifter/shifter/example/shifter_electricit
 
 It loads `trained_ctgan_iris.pkl` + `shifter.pt`, samples noise, applies the Shifter, and writes the steered synthetic dataset to `synthetic_shifted.csv` for inspection.
 
-The end-to-end training pipeline (CTGAN pretraining → Shifter optimization → evaluation) is shown in [`simple_experiment.ipynb`](simple_experiment.ipynb).
-
 ---
 
 ## Differentiable meta-features supported by the Shifter
 
-`shifter/src/differentiable_mfe.py` implements PyTorch versions of the following descriptors, used as targets `m*`:
-
-- `mean`, `sd`, `var` — per-column statistical summaries;
-- `attr_ent` — attribute entropy (continuous / categorical);
-- `joint_ent` — joint entropy of feature--target.
-
+`shifter/src/differentiable_mfe.py` implements PyTorch versions descriptors (`mean`, `sd`, `var`, `attr_ent`, `joint_ent`), used as targets `m*`.
 Non-differentiable descriptors (`mut_inf`, `class_conc`, `iq_range`) remain specific to the evolutionary branches.
