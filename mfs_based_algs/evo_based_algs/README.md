@@ -122,24 +122,3 @@ Run it from this directory so the local imports `mfs_split` and `mfs_synthetic` 
 cd mfs_based_algs/evo_based_algs
 jupyter notebook iris_demo.ipynb
 ```
-
-## Common prerequisites
-
-- `numpy`, `pandas`, `scikit-learn`
-- `deap` (NSGA-II / NSGA-III)
-- `pymfe` (meta-feature extraction)
-- `matplotlib`, `seaborn` (diagnostics)
-- `ForestDiffusion` (Branch 2 and `iris_demo.ipynb`)
-
-The data files used in the examples above live under [`../../data/`](../../data/) as `*_source.csv` / `*_target.csv` pairs.
-
----
-
-## Conceptual mapping
-
-| Concept (in the thesis) | Implementation |
-|-------------------------|----------------|
-| Equation \(\mathbf{f}(T) = (\hat r_1(S,T), \dots, \hat r_p(S,T), |\rho(S)-\rho(T)|)\) | `EvolutionarySplitOptimizer._fitness` in `mfs_split.py` |
-| Equation \(l_j(S') = \lVert m_j(S') - m_j^* \rVert_2\) | `compute_meta_feature` + objective in `mfs_synthetic.py` |
-| NSGA-II selection / Hall-of-Fame | `tools.selNSGA2` + `HallOfFame` in `mfs_split.py` |
-| NSGA-III with reference points + memory | `tools.selNSGA3WithMemory` in `mfs_synthetic.py` |
