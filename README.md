@@ -125,14 +125,3 @@ python evaluate_reconstruction.py
 ```
 
 The script reports the Adjusted Rand Index between the reconstructed split and the ground-truth source/target labels for every available dataset in `data/`.
-
----
-
-## Dependencies
-
-- `numpy>=1.21`, `pandas>=1.3`, `scikit-learn>=1.0`
-- `deap>=1.3`, `pymfe>=0.4` (evolutionary branches)
-- `torch>=1.9`, `xgboost>=1.5` (downstream and Shifter)
-- `matplotlib>=3.5`, `seaborn` (diagnostics)
-- ForestDiffusion (synthesis prior, Branch 2)
-- CTGAN (Branch 3)
